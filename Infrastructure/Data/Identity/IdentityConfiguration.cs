@@ -12,7 +12,9 @@ public static class IdentityConfiguration
         { 
             options.User.RequireUniqueEmail = true;
             options.Password.RequiredLength = 8;
-            options.Lockout.MaxFailedAccessAttempts = 5;
+
+            // Lockout configuration used as protection against brute-force attacks by limiting failed login attempts and temporarily blocking the account.
+            options.Lockout.MaxFailedAccessAttempts = 5; 
             options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(2);
             options.Lockout.AllowedForNewUsers = true;
         })

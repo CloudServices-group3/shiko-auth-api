@@ -1,4 +1,7 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿
+// CORS configuration to define which external origins are allowed to access the API.
+
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Infrastructure.Security;
 

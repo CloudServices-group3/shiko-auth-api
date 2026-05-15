@@ -1,4 +1,8 @@
-﻿namespace Infrastructure.Security;
+﻿
+// Defines keys used for JWT claims.
+// The keys are used as labels for information sent in the JWT payload / response.
+
+namespace Infrastructure.Security;
 
 public static class JwtClaimTypes
 {

@@ -1,5 +1,7 @@
-﻿using Microsoft.IdentityModel.Tokens;
-using System.Text;
+﻿
+// JwtOptions to configure how to generate and validating JWT tokens.
+
+using Microsoft.IdentityModel.Tokens;
 
 namespace Infrastructure.Security;
 
@@ -14,6 +16,9 @@ public sealed class JwtOptions
     public int RefreshTokenDays { get; set; } = 30;
 
 
+    /*
+     * Method to convert the SigningKey into a Byte array and pack it into a SymmetricSecurityKey used for JWT signing.
+     */
     public SymmetricSecurityKey GetSigningKey()
     {
         var bytes = Convert.FromBase64String(SigningKey);

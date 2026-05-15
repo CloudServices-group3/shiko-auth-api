@@ -25,7 +25,6 @@ builder.Services.AddInfrastructure
         builder.Environment    
     );
 
-builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 
 var app = builder.Build();
@@ -60,8 +59,6 @@ app.UseHttpsRedirection();
 
 app.UseAuthentication(); // Authentication
 app.UseAuthorization();
-
-app.MapControllers();
 
 app.MapAuthenticationEndpoints();
 
