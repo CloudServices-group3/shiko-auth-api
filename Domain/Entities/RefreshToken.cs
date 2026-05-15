@@ -1,5 +1,7 @@
 ﻿namespace Domain.Entities;
 
+// Entity to enable saving refresh tokens in the database.
+
 public class RefreshToken
 {
     public Guid Id { get; set; }

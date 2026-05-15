@@ -1,7 +1,9 @@
 ﻿
 // Using: Microsoft.EntityFrameworkCore.InMemory for the in-memory database.
 
+using Application.Abstractions;
 using Infrastructure.Data;
+using Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -18,6 +20,10 @@ public static class DependencyInjection
             IHostEnvironment environment
         )
     {
+        services.AddScoped<IAuthenticationService, AuthenticationService>();
+        services.AddScoped<IJwtTokenService, JwtTokenService>();
+        services.AddScoped<IRefreshTokenService, RefreshTokenService>();
+
         // Use in-memory database in Development environment.
         if (environment.IsDevelopment()) 
         {
