@@ -14,7 +14,7 @@ public static class CorsConfiguration
             options.AddPolicy("Frontend", policy =>
             {
                 policy
-                    .WithOrigins("http://127.0.0.1:5500", "http://localhost:3000", "https://localhost:3000")
+                    .WithOrigins("http://127.0.0.1:5500", "http://localhost:3000", "https://localhost:3000", "https://shiko-auth-api.azurewebsites.net")
                     .AllowAnyHeader()
                     .AllowAnyMethod()
                     .AllowCredentials();
