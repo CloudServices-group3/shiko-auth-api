@@ -24,7 +24,7 @@ public static class AuthenticationEndpoints
     {
         var result = await authenticationService.RegisterAsync(request, ct);
 
-        if (!result.isSuccess)
+        if (!result.IsSuccess)
             return Results.ValidationProblem(result.errors ?? new Dictionary<string, string[]>());
 
         return Results.Created($"/api/users/{result.Value!.UserId}", result.Value);
@@ -37,7 +37,7 @@ public static class AuthenticationEndpoints
         var ipAddress = httpContext.Connection.RemoteIpAddress?.ToString();
         var result = await authenticationService.LoginAsync(request, ipAddress, ct);
 
-        if (!result.isSuccess)
+        if (!result.IsSuccess)
             return Results.Unauthorized();
 
         return Results.Ok(result.Value);
@@ -48,7 +48,7 @@ public static class AuthenticationEndpoints
         var ipAddress = httpContext.Connection.RemoteIpAddress?.ToString();
         var result = await authenticationService.RefreshAsync(request, ipAddress, ct);
 
-        if (!result.isSuccess)
+        if (!result.IsSuccess)
             return Results.Unauthorized();
 
         return Results.Ok(result.Value);
@@ -75,7 +75,7 @@ public static class AuthenticationEndpoints
 
         var result = await authenticationService.GetCurrentUserAsync(userId, ct);
 
-        if (!result.isSuccess)
+        if (!result.IsSuccess)
             return Results.Unauthorized();
 
         return Results.Ok(result.Value);

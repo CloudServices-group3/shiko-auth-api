@@ -31,19 +31,6 @@ var app = builder.Build();
 
 app.UseCors("Frontend"); // Enable CORS using the "Frontend" policy.
 
-using ( var scope = app.Services.CreateScope())
-{
-    var services = scope.ServiceProvider;
-
-    var dbContext = services.GetRequiredService<DataContext>();
-
-    // The database is only migrated if it is a relational database.
-    if (dbContext.Database.IsRelational())
-    {
-        await dbContext.Database.MigrateAsync();
-    }
-}
-
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();

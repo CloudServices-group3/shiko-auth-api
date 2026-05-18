@@ -2,8 +2,6 @@
 using Application.Common;
 using Application.DTOs;
 using Infrastructure.Data.Identity;
-using Infrastructure.Security;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 
 namespace Infrastructure.Services;
@@ -21,6 +19,8 @@ public class AuthenticationService(UserManager<AppUser> userManager, IJwtTokenSe
             Email = email,
         };
 
+        // Creating a new user using ASP.NET Core Identity.
+        // Includes built-in validation for email format, password rules etc.
         var result = await userManager.CreateAsync(user, request.Password);
 
 
@@ -44,7 +44,7 @@ public class AuthenticationService(UserManager<AppUser> userManager, IJwtTokenSe
             return Result<LoginResult>.Fail("Unauthorized");
 
         if (await userManager.IsLockedOutAsync(user))
-            return Result<LoginResult>.Fail("User is temprarily locked out");
+            return Result<LoginResult>.Fail("User is temporarily locked out");
 
         var passwordValid = await userManager.CheckPasswordAsync(user, request.Password);
 
