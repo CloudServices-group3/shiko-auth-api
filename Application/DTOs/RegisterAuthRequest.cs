@@ -1,6 +1,4 @@
-﻿using System.Globalization;
-
-namespace Application.DTOs;
+﻿namespace Application.DTOs;
 
 public sealed record RegisterAuthRequest
 (

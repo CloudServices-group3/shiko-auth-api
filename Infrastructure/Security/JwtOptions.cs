@@ -2,6 +2,7 @@
 // JwtOptions to configure how to generate and validating JWT tokens.
 
 using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace Infrastructure.Security;
 
@@ -17,11 +18,11 @@ public sealed class JwtOptions
 
 
     /*
-     * Method to convert the SigningKey into a Byte array and pack it into a SymmetricSecurityKey used for JWT signing.
+     * Method to convert the SigningKey into a UTF-8 byte array and pack it into a SymmetricSecurityKey that is used for SHA-256 JWT signing and validation.
      */
     public SymmetricSecurityKey GetSigningKey()
     {
-        var bytes = Convert.FromBase64String(SigningKey);
+        var bytes = Encoding.UTF8.GetBytes(SigningKey);
 
         return new SymmetricSecurityKey(bytes);
     }
