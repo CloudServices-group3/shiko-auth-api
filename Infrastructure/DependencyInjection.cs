@@ -34,8 +34,11 @@ public static class DependencyInjection
         else
         {
             // Use SQL Server in Production environment.
-            var connectionString = configuration.GetConnectionString("ProductionDatabaseUrl")
-            ?? throw new ArgumentException("Production database Url not provided.");
+            // Read the Production database connection string from Azure environment variables.
+            var connectionString = Environment.GetEnvironmentVariable("SQLAZURECONNSTR_ProductionDatabaseUrl");
+            
+            if (string.IsNullOrWhiteSpace(connectionString))
+                throw new ArgumentException("Production database connection string is not set in Azure");
 
             services.AddDbContext<DataContext>(options =>
                 options.UseSqlServer(connectionString)
