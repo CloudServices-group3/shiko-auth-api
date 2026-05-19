@@ -22,7 +22,7 @@ builder.Services.AddRouting(options =>
 builder.Services.AddInfrastructure
     (
         builder.Configuration,
-        builder.Environment    
+       builder.Environment    
     );
 
 builder.Services.AddOpenApi();
