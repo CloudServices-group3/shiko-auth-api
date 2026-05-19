@@ -42,6 +42,9 @@ if (app.Environment.IsDevelopment())
     });
 }
 
+var conn = builder.Configuration.GetConnectionString("ProductionDatabaseUrl");
+Console.WriteLine("AZURE DB = " + conn);
+
 app.UseHttpsRedirection();
 
 app.UseAuthentication(); // Authentication

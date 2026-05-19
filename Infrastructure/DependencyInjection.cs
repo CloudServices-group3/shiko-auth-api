@@ -35,8 +35,8 @@ public static class DependencyInjection
         {
             // Use SQL Server in Production environment.
             // Read the Production database connection string from Azure environment variables.
-            var connectionString = Environment.GetEnvironmentVariable("SQLAZURECONNSTR_ProductionDatabaseUrl");
-            
+            var connectionString = configuration.GetConnectionString("ProductionDatabaseUrl");
+
             if (string.IsNullOrWhiteSpace(connectionString))
                 throw new ArgumentException("Production database connection string is not set in Azure");
 
