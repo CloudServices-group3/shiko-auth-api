@@ -13,11 +13,26 @@ public static class AuthenticationEndpoints
     {
         var group = app.MapGroup("/api/auth");
 
+        group.MapPost("/check-email", CheckEmail);
         group.MapPost("/register", Register);
         group.MapPost("/login", Login);
         group.MapPost("/refresh", Refresh);
         group.MapPost("/logout", Logout);
         group.MapGet("/me", Me).RequireAuthorization(); // An endpoint for the frontend to be able to find out who is logged in.
+        group.MapDelete("/user/{userId}", DeleteUser);
+    }
+
+    private static async Task<IResult> CheckEmail(CheckEmailRequest request, IAuthenticationService authenticationService, CancellationToken ct = default)
+    {
+        if (request is null)
+            return Results.BadRequest("Request cannot be empty");
+
+        var result = await authenticationService.CheckEmailAsync(request, ct);
+
+        if (!result.IsSuccess)
+            return Results.BadRequest();
+
+        return Results.Ok(new { exists = result.Value });
     }
 
     private static async Task<IResult> Register(RegisterAuthRequest request, IAuthenticationService authenticationService, CancellationToken ct = default)
@@ -79,5 +94,18 @@ public static class AuthenticationEndpoints
             return Results.Unauthorized();
 
         return Results.Ok(result.Value);
+    }
+
+    private static async Task<IResult> DeleteUser(string userId, IAuthenticationService authenticationService, CancellationToken ct = default)
+    {
+        if (string.IsNullOrWhiteSpace(userId))
+            return Results.BadRequest("User ID is required");
+
+        var result = await authenticationService.DeleteUserAsync(userId, ct);
+
+        if (!result.IsSuccess)
+            return Results.BadRequest(result.ErrorMessage);
+
+        return Results.NoContent();
     }
 }
