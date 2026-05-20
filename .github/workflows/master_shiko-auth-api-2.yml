@@ -51,5 +51,5 @@ jobs:
         with:
           app-name: 'shiko-auth-api-2'
           slot-name: 'Production'
-          package: '${{env.DOTNET_ROOT}}/myapp/publish'
+          package: .
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_7C624EBC2FE24AB59AB6B93FA3EBD147 }}
