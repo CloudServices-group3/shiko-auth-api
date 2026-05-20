@@ -1,5 +1,4 @@
 using Infrastructure;
-using Infrastructure.Data;
 using Infrastructure.Data.Identity;
 using Infrastructure.Security;
 using Microsoft.EntityFrameworkCore;
