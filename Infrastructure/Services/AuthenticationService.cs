@@ -9,13 +9,22 @@ namespace Infrastructure.Services;
 
 public class AuthenticationService(UserManager<AppUser> userManager, IJwtTokenService jwtTokenService, IRefreshTokenService refreshTokenService) : IAuthenticationService
 {
-    public async Task<Result<bool>> CheckEmailAsync(CheckEmailRequest request, CancellationToken ct = default)
+    public async Task<Result<CheckEmailResult>> CheckEmailAsync(CheckEmailRequest request, CancellationToken ct = default)
     {
         var email = request.Email.Trim().ToLowerInvariant();
 
         var user = await userManager.FindByEmailAsync(email);
+        if (user is null)
+        {
+            return Result<CheckEmailResult>.Ok
+                (
+                    new CheckEmailResult(AuthCheckStatus.NotFound)
+                );
+        }
 
-        return Result<bool>.Ok(user is not null);
+        return Result<CheckEmailResult>.Ok(
+                    new CheckEmailResult(AuthCheckStatus.ReadyForLogin)
+            );
     }
 
     public async Task<Result<RegisterResult>> RegisterAsync(RegisterAuthRequest request, CancellationToken ct = default)

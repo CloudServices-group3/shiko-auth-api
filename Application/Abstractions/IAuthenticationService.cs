@@ -11,7 +11,7 @@ namespace Application.Abstractions;
 
 public interface IAuthenticationService
 {
-    Task<Result<bool>> CheckEmailAsync(CheckEmailRequest request, CancellationToken ct = default);
+    Task<Result<CheckEmailResult>> CheckEmailAsync(CheckEmailRequest request, CancellationToken ct = default);
 
     Task<Result<RegisterResult>> RegisterAsync(RegisterAuthRequest request, CancellationToken ct = default);
 
