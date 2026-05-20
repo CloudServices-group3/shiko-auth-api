@@ -4,6 +4,7 @@ using Infrastructure.Security;
 using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
 using Shiko.Auth.Api.Endpoints;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +13,13 @@ builder.Services.AddCorsConfiguration(); // File for configuring CORS policies a
 builder.Services.AddIdentityConfiguration(builder.Configuration); // File in the Infrastructure layer with configuration for JWT and more.
 
 builder.Services.AddJwtConfiguration(builder.Configuration);
+
+builder.Services.ConfigureHttpJsonOptions(options =>
+{
+    options.SerializerOptions.Converters.Add(
+        new JsonStringEnumConverter()
+        );
+});
 
 builder.Services.AddRouting(options =>
 {

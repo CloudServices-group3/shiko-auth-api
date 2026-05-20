@@ -32,7 +32,7 @@ public static class AuthenticationEndpoints
         if (!result.IsSuccess)
             return Results.BadRequest();
 
-        return Results.Ok(new { exists = result.Value });
+        return Results.Ok(result.Value);
     }
 
     private static async Task<IResult> Register(RegisterAuthRequest request, IAuthenticationService authenticationService, CancellationToken ct = default)
