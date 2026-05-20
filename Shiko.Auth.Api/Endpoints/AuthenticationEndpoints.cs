@@ -19,7 +19,7 @@ public static class AuthenticationEndpoints
         group.MapPost("/refresh", Refresh);
         group.MapPost("/logout", Logout);
         group.MapGet("/me", Me).RequireAuthorization(); // An endpoint for the frontend to be able to find out who is logged in.
-        group.MapDelete("/user/{userId}", DeleteUser);
+        group.MapDelete("/delete-user/{userId}", DeleteUser);
     }
 
     private static async Task<IResult> CheckEmail(CheckEmailRequest request, IAuthenticationService authenticationService, CancellationToken ct = default)
