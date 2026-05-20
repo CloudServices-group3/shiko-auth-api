@@ -2,12 +2,22 @@
 using Application.Common;
 using Application.DTOs;
 using Infrastructure.Data.Identity;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 
 namespace Infrastructure.Services;
 
 public class AuthenticationService(UserManager<AppUser> userManager, IJwtTokenService jwtTokenService, IRefreshTokenService refreshTokenService) : IAuthenticationService
 {
+    public async Task<Result<bool>> CheckEmailAsync(CheckEmailRequest request, CancellationToken ct = default)
+    {
+        var email = request.Email.Trim().ToLowerInvariant();
+
+        var user = await userManager.FindByEmailAsync(email);
+
+        return Result<bool>.Ok(user is not null);
+    }
+
     public async Task<Result<RegisterResult>> RegisterAsync(RegisterAuthRequest request, CancellationToken ct = default)
     {
         // ToLowerInvariant() = Converts uppercase letters to lowercase letters without using language-specific rules from the user's computer.
@@ -150,5 +160,20 @@ public class AuthenticationService(UserManager<AppUser> userManager, IJwtTokenSe
                 user.PhoneNumber,
                 roles.ToList()
             ));
+    }
+
+    public async Task<Result<bool>> DeleteUserAsync(string userId, CancellationToken ct = default)
+    {
+        var user = await userManager.FindByIdAsync(userId);
+
+        if (user is null)
+            return Result<bool>.Fail("User not found");
+
+        var result = await userManager.DeleteAsync(user);
+
+        if (!result.Succeeded)
+            return Result<bool>.Fail("Could not delete user");
+
+        return Result<bool>.Ok(true);
     }
 }

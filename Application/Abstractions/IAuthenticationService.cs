@@ -11,6 +11,8 @@ namespace Application.Abstractions;
 
 public interface IAuthenticationService
 {
+    Task<Result<bool>> CheckEmailAsync(CheckEmailRequest request, CancellationToken ct = default);
+
     Task<Result<RegisterResult>> RegisterAsync(RegisterAuthRequest request, CancellationToken ct = default);
 
     Task<Result<LoginResult>> LoginAsync(LoginAuthRequest request, string? ipAddress, CancellationToken ct = default);
@@ -18,4 +20,6 @@ public interface IAuthenticationService
     Task<Result<RefreshTokenResult>> RefreshAsync(RefreshAuthRequest request, string? ipAddress, CancellationToken ct = default);
 
     Task<Result<CurrentUserResult>> GetCurrentUserAsync(string userId, CancellationToken ct = default);
+
+    Task<Result<bool>> DeleteUserAsync(string userId, CancellationToken ct = default);
 }
